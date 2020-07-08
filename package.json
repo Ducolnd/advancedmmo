@@ -1,0 +1,23 @@
+{
+  "name": "advancedmmo",
+  "version": "1.0.0",
+  "description": "Advanced MMO is an MMO with a large set of things to do, thus advanced",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "EarlessBear",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-handlebars": "^5.0.0",
+    "knex": "^0.21.1",
+    "mustache": "^4.0.1",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.4",
+    "pug": "^3.0.0"
+  },
+  "devDependencies": {}
+}
