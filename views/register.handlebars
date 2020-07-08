@@ -5,19 +5,19 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login page</title>
+    <title>Register page</title>
 </head>
 <body>
-    <div>
-        <h2>Login page</h2>
-        <form action="/register/data" method="POST">
-            <input type="text" name="username" placeholder="Username" required>
-            <input type="email" name="email" placeholder="Email" required>
-            <input type="password" name="password" placeholder="Password" required>
+    <h1>Register page</h1>
+    <p>Create an account!</p>
 
-            <input type="submit">
+    <form action="/auth/register/data" method="POST">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
 
-        </form>
-    </div>
+        <input type="submit">
+
+    </form>
 </body>
 </html>
