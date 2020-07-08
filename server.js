@@ -2,11 +2,13 @@ const express = require('express');
 const exphbs = require('express-handlebars');
 const app = express();
 
-const actions = require("./actions");
+const actions = require("./routes/actions");
+const auth = require("./routes/auth")
 
 app.engine('handlebars', exphbs())
 app.set('view engine', 'handlebars')
 
+app.use("/", auth)
 app.use("/actions", actions)
 app.use("/public", express.static(__dirname + '/public'))
 
@@ -19,8 +21,5 @@ app.get("/", function(req, res) {
 })
 
 app.get("/about", function(req, res) {
-    res.render("about")
+    res.render("about", {"layout": false})
 })
-
-
-

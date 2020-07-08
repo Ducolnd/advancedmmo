@@ -25,5 +25,5 @@ function newUser(username, email, password) {
     console.log("Created new user!")
 }
 
-module.exports.newUser = newUser
+module.exports = con
 
