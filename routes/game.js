@@ -19,4 +19,13 @@ router.get("/info",function (req, res) {
     res.send("info")
 })
 
+router.get("/coins",function (req, res) {
+    if (req.session.loggedin) {//check if player is logged in
+        res.render("coin_getter", {"layout": false, username: req.session.username})
+    }
+    else{//if not logged in send error
+        res.send("Please log in.")
+    }
+})
+
 module.exports = router
