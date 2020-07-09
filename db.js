@@ -19,11 +19,12 @@ class Db {
     }
 
     newUser(username, email, password) { // Create a new user
-        this.insert("users", {
+        if ((get === this.insert("users", {
             username: username,
             email: email,
             password: password
-        })
+        }))) { return get }
+
     }
 
     insert(table, data) { // New row according to 'data' object
@@ -40,7 +41,7 @@ class Db {
         sql = sql.slice(0, -1) + ")";
 
         this.db.query(sql, function (err) { // Perform sql query
-            if (err) console.log("Mysql Error!: " + err)
+            if (err) console.log(err)
         })
     }
 
@@ -60,7 +61,7 @@ class Db {
 }
 
 let db = new Db()
-db.update("player_data", {coins: "coins + 1"}, "username = 'earlessbe-ar'")
+//db.insert("users", {username: "Isd", email: "sdf", password: "testset"})
 
-module.exports.db = db
+module.exports = db
 

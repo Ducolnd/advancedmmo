@@ -1,8 +1,8 @@
 const express = require("express")
 const session = require("express-session")
+const db = require("../db")
 const bcrypt = require("bcrypt");
 const bodyParser = require('body-parser');
-const db = require('../db');
 
 const router = express.Router()
 
@@ -31,9 +31,10 @@ router.post("/register/data", async function (req, res) {
     try { // Hash password
         const hashedPassword = await bcrypt.hash(req.body.password, 8)
 
-        db.query("SELECT * FROM users WHERE username = ? AND email = ?", [username, email], function (error, results) {
+        db.db.query("SELECT * FROM users WHERE username = ? AND email = ?", [username, email], function (error, results) {
             if (!results.length > 0) {
-                db.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${hashedPassword}')`, function (err) {
+                // db.newUser(username, email, hashedPassword)
+                db.db.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${hashedPassword}')`, function (err) {
                     if (!err) {
                         req.session.loggedin = true;
                         req.session.username = username;
@@ -56,7 +57,7 @@ router.post("/login/data", function (req, res) {
     let password = req.body.password;
 
     if (username && password) { // Check if provided
-        db.query("SELECT * FROM users WHERE username = ? LIMIT 1", [username], async function (error, results) {
+        db.db.query("SELECT * FROM users WHERE username = ? LIMIT 1", [username], async function (error, results) {
             if(results.length > 0) {
                 let pwd = results[0].password;
                 try {
