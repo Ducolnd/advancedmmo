@@ -18,4 +18,9 @@ router.post("/buy",function (req, res) {
 
 })
 
+router.post("/money",function (req, res) {
+    
+    res.json({wait: 0})
+})
+
 module.exports = router

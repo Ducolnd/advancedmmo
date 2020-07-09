@@ -24,7 +24,8 @@ router.get("/coins",function (req, res) {
         res.render("coin_getter", {"layout": false, username: req.session.username})
     }
     else{//if not logged in send error
-        res.send("Please log in.")
+        res.render("coin_getter", {"layout": false, username: req.session.username})
+        //res.send("Please log in.")
     }
 })
 
