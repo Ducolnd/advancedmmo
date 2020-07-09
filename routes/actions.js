@@ -11,7 +11,7 @@ router.use(session({
 
 
 router.post("/walk", function(req, res) {
-    res.end()
+    res.json({timetowait: 23})
 })
 
 router.post("/buy",function (req, res) {

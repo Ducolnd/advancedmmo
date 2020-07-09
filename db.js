@@ -1,29 +1,66 @@
 var mysql = require('mysql');
 
-var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "abcdefgh",
-    database: "advanced_mmo"
-});
+class Db {
+    constructor(host="localhost", user="root", psw="abcdefgh", db_name="advanced_mmo") {
+        this.db = mysql.createConnection({ // Create db object
+            host: host,
+            user: user,
+            password: psw,
+            database: db_name
+        })
 
-con.connect(function(err) { // Create and check connection
-    if (err) {
-        console.log("Error" + err)
-        return
-    } console.log("Connected!");
-});
+        this.db.connect(function (err) { // Connect database upon initalizing
+            if (err) {console.log("Error! " + err)} else { console.log("Connected to database") }
+        })
 
-con.on("error", function(err) {
-    console.log("[mysql error]", err)
-})
+        this.db.on("error", function (err) { // Error
+            console.log("Mysql Error!: " + err)
+        })
+    }
 
-function newUser(username, email, password) {
-    var sql = `INSERT INTO users (username, email, password) VALUES ("${username}", "${email}", "${password}")`
-    con.query(sql)
+    newUser(username, email, password) { // Create a new user
+        this.insert("users", {
+            username: username,
+            email: email,
+            password: password
+        })
+    }
 
-    console.log("Created new user!")
+    insert(table, data) { // New row according to 'data' object
+        let sql = `INSERT INTO ${table} (`;
+
+        Object.keys(data).forEach(key => {
+            sql += key + ","
+        })
+        sql = sql.slice(0, -1) + ") VALUES (";
+
+        Object.values(data).forEach(value => {
+            sql += `'${value}',`;
+        })
+        sql = sql.slice(0, -1) + ")";
+
+        this.db.query(sql, function (err) { // Perform sql query
+            if (err) console.log("Mysql Error!: " + err)
+        })
+    }
+
+    update(table, data, condition) {
+        let sql = `UPDATE ${table} SET `
+
+        Object.keys(data).forEach(key => {
+            sql += `${key} = ${data[key]},`
+        })
+
+        sql = sql.slice(0, -1) + ` WHERE ${condition}`
+        console.log(sql)
+        this.db.query(sql, function (err) { // Perform sql query
+            if (err) console.log("Mysql Error!: " + err)
+        })
+    }
 }
 
-module.exports = con
+let db = new Db()
+db.update("player_data", {coins: "coins + 1"}, "username = 'earlessbe-ar'")
+
+module.exports.db = db
 
