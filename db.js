@@ -58,9 +58,67 @@ class Db {
             if (err) console.log("Mysql Error!: " + err)
         })
     }
+
+    read(table, data, callback) { // data: {columns : [columns], conditions : {columns: value}, operators: [=, >]}, limit: int}
+        let sql = `SELECT `
+
+        if ("columns" in data) {
+            data["columns"].forEach( function (name) {
+                sql += `${name},`
+            })
+            sql = sql.slice(0, -1) + ` FROM ${table} WHERE ` // Slice last comma
+        } else { sql += `* FROM ${table} WHERE `}
+
+        let cond = data["conditions"]
+        Object.keys(data["conditions"]).forEach(key => {
+            if (data["integers"]) {
+                if("operators" in data) {
+                    sql += `${key} ${data["operators"][Object.keys(cond).indexOf(key)]} ${cond[key]} AND `
+                } else {
+                    sql += `${key} = ${cond[key]} AND `
+                }
+            } else {
+                if("operators" in data) {
+                    sql += `${key} ${data["operators"][Object.keys(cond).indexOf(key)]} '${cond[key]}' AND `
+                } else {
+                    sql += `${key} = '${cond[key]}' AND `
+                }
+            }
+        })
+        sql = sql.slice(0, -4)
+        console.log(sql)
+
+        this.db.query(sql, function (err, results) {
+            if (err) console.log(err)
+            callback(results)
+        })
+    }
 }
 
+
 let db = new Db()
+db.read("player_data", {
+    integers: false,
+    columns: ["coins"],
+    conditions: {
+        username: "ducobear"
+    }
+}, function (data) {
+    console.log(data[0].coins)
+})
+db.read("player_data", {
+    integers: false,
+    //columns: ["username", "email", "password"],
+    conditions: {
+        coins: 5000,
+        //email: "duco.lindhout@gmail.com"
+    },
+    operators: [
+        ">",
+    ]
+}, function (returnValue) {
+    console.log(returnValue[0]["username"])
+})
 //db.insert("users", {username: "Isd", email: "sdf", password: "testset"})
 
 module.exports = db
