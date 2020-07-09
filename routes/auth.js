@@ -1,24 +1,22 @@
 const express = require("express")
-const session = require('express-session');
-const cookieParser = require("cookie-parser")
+const session = require("express-session")
 const bcrypt = require("bcrypt");
 const bodyParser = require('body-parser');
 const db = require('../db');
 
 const router = express.Router()
 
-router.use(cookieParser())
 router.use(session({
-    secret: "geheim",
+    secret: "yayee",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
 }))
 
 router.use(bodyParser.urlencoded({extended: true}))
 router.use(bodyParser.json())
 
 router.get("/login", function(req, res) {
-    if (req.session.loggedin) {
-        res.redirect("/")
-    }
     res.render("login", {"layout": false} );
 });
 
@@ -35,7 +33,7 @@ router.post("/register/data", async function (req, res) {
 
         db.query("SELECT * FROM users WHERE username = ? AND email = ?", [username, email], function (error, results) {
             if (!results.length > 0) {
-                db.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${hashedPassword}')`, function (err, result) {
+                db.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${hashedPassword}')`, function (err) {
                     if (!err) {
                         req.session.loggedin = true;
                         req.session.username = username;
@@ -58,13 +56,14 @@ router.post("/login/data", function (req, res) {
     let password = req.body.password;
 
     if (username && password) { // Check if provided
-        db.query("SELECT * FROM users WHERE username = ? LIMIT 1", [username], async function (error, results, field) {
+        db.query("SELECT * FROM users WHERE username = ? LIMIT 1", [username], async function (error, results) {
             if(results.length > 0) {
                 let pwd = results[0].password;
                 try {
                     if(await bcrypt.compare(password, pwd)) {
                         req.session.loggedin = true;
                         req.session.username = username;
+
                         res.redirect("/");
                     } else {
                         res.send("Password was incorrect")

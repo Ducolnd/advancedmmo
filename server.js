@@ -1,8 +1,14 @@
 const express = require('express');
-const session = require("express-session")
 const exphbs = require('express-handlebars');
-const cookieParser = require("cookie-parser")
+var session = require('express-session')
 const app = express();
+
+app.use(session({ // Define session, this is used in every route. This MUST be placed before creating the routes (below) for it to work.
+    secret: "yayee",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+}))
 
 const actions = require("./routes/actions");
 const auth = require("./routes/auth")
@@ -12,30 +18,22 @@ app.engine('handlebars', exphbs())
 app.set('view engine', 'handlebars')
 
 app.use("/auth", auth) // Includes logging in and registering
-app.use("/actions", actions) // Mainly game related stuff
-app.use("/game", game)
+app.use("/actions", actions) // Mainly game related actions such as adding money
+app.use("/game", game) // Game pages
 
-app.use(cookieParser())
 app.use("/public", express.static(__dirname + '/public')) // Static files such as images and css
-app.use(session({
-    secret: "geheim",
-    secure: false
-}))
 
 const server = app.listen(7000, () => {
     console.log("Express is up and running! Port: " + server.address().port);
 });
 
 app.get("/", function(req, res) {
-    console.log(req.session)
-    if(!req.session.test) {
-        req.session.test = "cheese"
-    } else {
-        req.session.test = null
-    }
-    res.render('landing', {"name": req.session.test, "title": "H"})
+    req.session.views++;
+    res.render('landing', {"title": "H"})
 })
 
 app.get("/about", function(req, res) {
-    res.render("about", {"layout": false})
+    req.session.views++;
+    console.log(req.session)
+    res.render("about", {"layout": false, username: req.session.username})
 })
