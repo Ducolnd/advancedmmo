@@ -2,6 +2,7 @@
   <dictionary name="duco">
     <words>
       <w>bcrypt</w>
+      <w>navbar</w>
       <w>resave</w>
     </words>
   </dictionary>

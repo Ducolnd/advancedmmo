@@ -1,6 +1,6 @@
 const express = require('express');
 const exphbs = require('express-handlebars');
-var session = require('express-session')
+const session = require('express-session')
 const app = express();
 
 app.use(session({ // Define session, this is used in every route. This MUST be placed before creating the routes (below) for it to work.
@@ -28,8 +28,8 @@ const server = app.listen(7000, () => {
 });
 
 app.get("/", function(req, res) {
-    req.session.views++;
-    res.render('landing', {"title": "H"})
+    req.session.username = "EArlessbear!"
+    res.render('landing', {layout: "complete.handlebars", title: "Welcome", username: req.session.username})
 })
 
 app.get("/about", function(req, res) {

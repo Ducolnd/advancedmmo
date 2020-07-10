@@ -4,9 +4,4 @@ $(document).ready(function() {
             console.log("Button click")
         })
     })
-    $("#addbutton").click(function() {
-        $.post("/actions/money", function(data) {
-            $("#coin-amount").html(data.coins)
-        })
-    })
 });
