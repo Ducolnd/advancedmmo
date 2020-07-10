@@ -17,11 +17,11 @@ router.use(bodyParser.urlencoded({extended: true}))
 router.use(bodyParser.json())
 
 router.get("/login", function(req, res) {
-    res.render("login", {"layout": false} );
+    res.render("auth/login", {"layout": false} );
 });
 
 router.get("/register", function (req, res) {
-    res.render("register", {"layout": false})
+    res.render("auth/register", {"layout": false})
 })
 
 // Register router

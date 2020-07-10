@@ -6,9 +6,7 @@ $(document).ready(function() {
     })
     $("#addbutton").click(function() {
         $.post("/actions/money", function(data) {
-            if (data["wait"] > 0 ) {
-                $("h1").hide();
-            }
+            $("#coin-amount").html(data.coins)
         })
     })
 });

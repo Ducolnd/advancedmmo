@@ -20,11 +20,11 @@ router.get("/info",function (req, res) {
 })
 
 router.get("/coins",function (req, res) {
-    if (req.session.loggedin) {//check if player is logged in
-        res.render("coin_getter", {"layout": false, username: req.session.username})
+    if (req.session.loggedin) { //check if player is logged in
+        res.render("game/coin_getter", {"layout": false, username: req.session.username})
     }
-    else{//if not logged in send error
-        res.render("coin_getter", {"layout": false, username: req.session.username})
+    else{ //if not logged in send error
+        res.render("game/coin_getter", {"layout": false, username: req.session.username})
         //res.send("Please log in.")
     }
 })

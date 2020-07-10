@@ -19,15 +19,29 @@ class Db {
     }
 
     newUser(username, email, password) { // Create a new user
-        if ((get === this.insert("users", {
+        this.insert("users", {
             username: username,
             email: email,
             password: password
-        }))) { return get }
+        }, (returnData) => {
+            console.log(returnData)
+        })
 
     }
 
-    insert(table, data) { // New row according to 'data' object
+    getPlayerCoins(username, callback) {
+        db.read("player_data", {
+            integers: false,
+            columns: ["coins"],
+            conditions: {
+                username: username
+            }
+        }, function (data) {
+            callback(data)
+        })
+    }
+
+    insert(table, data, callback) { // New row according to 'data' object
         let sql = `INSERT INTO ${table} (`;
 
         Object.keys(data).forEach(key => {
@@ -41,7 +55,7 @@ class Db {
         sql = sql.slice(0, -1) + ")";
 
         this.db.query(sql, function (err) { // Perform sql query
-            if (err) console.log(err)
+            if (err) callback(err)
         })
     }
 
@@ -97,28 +111,7 @@ class Db {
 
 
 let db = new Db()
-db.read("player_data", {
-    integers: false,
-    columns: ["coins"],
-    conditions: {
-        username: "ducobear"
-    }
-}, function (data) {
-    console.log(data[0].coins)
-})
-db.read("player_data", {
-    integers: false,
-    //columns: ["username", "email", "password"],
-    conditions: {
-        coins: 5000,
-        //email: "duco.lindhout@gmail.com"
-    },
-    operators: [
-        ">",
-    ]
-}, function (returnValue) {
-    console.log(returnValue[0]["username"])
-})
+
 //db.insert("users", {username: "Isd", email: "sdf", password: "testset"})
 
 module.exports = db

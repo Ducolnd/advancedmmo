@@ -1,5 +1,6 @@
 const express = require("express")
 const session = require("express-session")
+const db = require("../db")
 const router = express.Router()
 
 router.use(session({
@@ -19,8 +20,9 @@ router.post("/buy",function (req, res) {
 })
 
 router.post("/money",function (req, res) {
-    
-    res.json({wait: 0})
+    db.getPlayerCoins(req.session.username, (returnData) => {
+        res.json(returnData[0])
+    })
 })
 
 module.exports = router
