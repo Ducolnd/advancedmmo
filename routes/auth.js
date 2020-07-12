@@ -1,7 +1,8 @@
 const express = require("express")
 const session = require("express-session")
-const db = require("../db")
+const {body, validationResult} = require("express-validator")
 const bcrypt = require("bcrypt");
+const db = require("../db")
 const bodyParser = require('body-parser');
 
 const router = express.Router()
@@ -12,42 +13,51 @@ router.use(session({
     saveUninitialized: true,
     cookie: { secure: false }
 }))
-
 router.use(bodyParser.urlencoded({extended: true}))
 router.use(bodyParser.json())
 
 router.get("/login", function(req, res) {
-    res.render("auth/login", {"layout": false} );
+    res.render("auth/login", {layout: "logincomplete.handlebars", title: "Login page"} );
 });
 
 router.get("/register", function (req, res) {
-    res.render("auth/register", {"layout": false})
+    res.render("auth/register", {layout: "logincomplete.handlebars", title: "Register new account", erros: req.session.errors})
 })
 
 // Register router
-router.post("/register/data", async function (req, res) {
-    let username = req.body.username;
-    let email =  req.body.email;
-    try { // Hash password
-        const hashedPassword = await bcrypt.hash(req.body.password, 8)
+router.post("/register/data", [
+    body("username").isAscii().withMessage("Username may only contain ASCII characters"),
+    body("email").isEmail().withMessage("Email is not a valid email"),
+    body("password").isAscii().isLength({min: 5, max: 50}).withMessage("Password must be at least 5 characters long and at most 50 characters")
 
-        db.db.query("SELECT * FROM users WHERE username = ? AND email = ?", [username, email], function (error, results) {
-            if (!results.length > 0) {
-                // db.newUser(username, email, hashedPassword)
-                db.db.query(`INSERT INTO users (username, email, password) VALUES ('${username}', '${email}', '${hashedPassword}')`, function (err) {
-                    if (!err) {
-                        req.session.loggedin = true;
-                        req.session.username = username;
+], async function (req, res) {
+    let errors = validationResult(req).array()
+    if (Array.isArray(errors) && errors.length) {
+        console.log(errors)
+        req.session.errors = errors;
+        return res.redirect("/auth/register")
+    } else {
+        let username = req.body.username;
+        let email = req.body.email;
 
-                        res.redirect("/")
-                    }
-                })
-            } else {
-                res.send("Username or email already exists, try again.")
-            }
-        })
-    } catch {
-        res.status(500).send()
+        try { // Hash password
+            const hashedPassword = await bcrypt.hash(req.body.password, 8)
+
+            db.newUser(username, email, hashedPassword, function (err) {
+                if (!err) {
+                    req.session.loggedin = true;
+                    req.session.username = username;
+
+                    res.redirect("/")
+                } else {
+                    console.log("mysql err!: ", err)
+                    res.send("An error occurred while registering you in. This is not your fault, contact an admin")
+                }
+            })
+        } catch (err) {
+            console.log("catch error with err: ", err)
+            res.send("failed")
+        }
     }
 })
 

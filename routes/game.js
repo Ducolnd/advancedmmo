@@ -10,9 +10,14 @@ router.use(session({
 }))
 
 router.get("/", function(req, res) {
-    console.log(req.session.views)
-    res.send("game")
+    res.render("game/game_home", {layout: "complete"})
 })
+
+router.get("/items", function (req, res) {
+    res.render("game/items")
+})
+
+router.get("/items/add")
 
 router.get("/info",function (req, res) {
     console.log(req.session)

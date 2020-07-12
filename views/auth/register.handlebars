@@ -1,23 +1,26 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Register page</title>
-</head>
-<body>
-    <h1>Register page</h1>
-    <p>Create an account!</p>
-
-    <form action="/auth/register/data" method="POST">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Password" required>
-
-        <input type="submit">
-
-    </form>
-</body>
-</html>
+<div class="container">
+    <div class="card">
+        <h5 class="card-header info-color white-text text-center py-4 bg-dark text-white">
+            <strong>Log in</strong>
+        </h5>
+        <div class="card-body px-lg-5 pt-0">
+            <form class="text-center" style="color: #757575;" action="/auth/register/data" method="POST">
+                <div class="md-form">
+                    <input type="text" name="username" id="username-field" class="form-control">
+                    <label for="materialLoginFormEmail">Username</label>
+                </div>
+                <div class="md-form">
+                    <input type="email" name="email" id="materialLoginFormEmail" class="form-control">
+                    <label for="materialLoginFormEmail">E-mail</label>
+                </div>
+                <div class="md-form">
+                    <input type="password" name="password" id="materialLoginFormPassword" class="form-control">
+                    <label for="materialLoginFormPassword">Password</label>
+                </div>
+                <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">
+                    Register new account
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

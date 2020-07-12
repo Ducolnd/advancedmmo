@@ -18,15 +18,29 @@ class Db {
         })
     }
 
-    newUser(username, email, password) { // Create a new user
+    newUser(username, email, password, callback) { // Create a new user
         this.insert("users", {
             username: username,
             email: email,
             password: password
-        }, (returnData) => {
-            console.log(returnData)
+        }, (err) => {
+            if (err) {
+                if (err.code === "ER_DUP_ENTRY") {
+                    console.log("duplicate first")
+                    return callback(err)
+                }
+                console.log(err)
+            } else {
+                this.insert("player_data", {username: username}, function (g) {
+                    if (!g) {
+                        callback(false)
+                    } else {
+                        console.log(g)
+                        callback(g)
+                    }
+                })
+            }
         })
-
     }
 
     getPlayerCoins(username, callback) {
@@ -55,7 +69,7 @@ class Db {
         sql = sql.slice(0, -1) + ")";
 
         this.db.query(sql, function (err) { // Perform sql query
-            if (err) callback(err)
+            callback(err)
         })
     }
 

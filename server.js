@@ -28,7 +28,6 @@ const server = app.listen(7000, () => {
 });
 
 app.get("/", function(req, res) {
-    req.session.username = "EArlessbear!"
     res.render('landing', {layout: "complete.handlebars", title: "Welcome", username: req.session.username})
 })
 
