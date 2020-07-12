@@ -32,7 +32,5 @@ app.get("/", function(req, res) {
 })
 
 app.get("/about", function(req, res) {
-    req.session.views++;
-    console.log(req.session)
     res.render("about", {"layout": false, username: req.session.username})
 })

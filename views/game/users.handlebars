@@ -1,0 +1,13 @@
+<div class="container">
+    {{#if found}}
+        <h1>Displaying data for {{user.username}}</h1>
+            id: <b>{{user.id}}</b><br>
+            username: <b>{{user.username}}</b><br>
+            coins: <b>{{user.coins}}</b><br>
+            experience: <b>{{user.experience}}</b><br>
+            level: <b>{{user.level}}</b><br>
+    {{else}}
+        <h1 id="does-not-exist">User does not exist</h1>
+    {{/if}}
+
+</div>

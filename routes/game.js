@@ -1,5 +1,6 @@
 const express = require("express")
 const session = require("express-session")
+const db = require("../db")
 const router = express.Router()
 
 router.use(session({
@@ -13,11 +14,24 @@ router.get("/", function(req, res) {
     res.render("game/game_home", {layout: "complete"})
 })
 
-router.get("/items", function (req, res) {
+router.get("/items", function (req, res) { // Get all the items in the game
     res.render("game/items")
 })
 
-router.get("/items/add")
+router.get("/items/add", function (req, res) { // Add a new item
+
+})
+
+router.get("/player/:username", function (req, res) {
+    db.getPlayerInfo(req.params.username, "",function (results) {
+        if (results && !results.length) {
+            res.render("game/users", {layout: "complete", found: false})
+        } else {
+            res.render("game/users", {layout: "complete", found: true, user: results[0]})
+        }
+    })
+})
+
 
 router.get("/info",function (req, res) {
     console.log(req.session)

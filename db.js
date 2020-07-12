@@ -43,10 +43,10 @@ class Db {
         })
     }
 
-    getPlayerCoins(username, callback) {
+    getPlayerInfo(username, info="*", callback) { // Default is all (*)
         db.read("player_data", {
             integers: false,
-            columns: ["coins"],
+            ...(info === "*") && {columns: info},
             conditions: {
                 username: username
             }
@@ -81,7 +81,6 @@ class Db {
         })
 
         sql = sql.slice(0, -1) + ` WHERE ${condition}`
-        console.log(sql)
         this.db.query(sql, function (err) { // Perform sql query
             if (err) console.log("Mysql Error!: " + err)
         })
@@ -114,7 +113,6 @@ class Db {
             }
         })
         sql = sql.slice(0, -4)
-        console.log(sql)
 
         this.db.query(sql, function (err, results) {
             if (err) console.log(err)
@@ -127,6 +125,5 @@ class Db {
 let db = new Db()
 
 //db.insert("users", {username: "Isd", email: "sdf", password: "testset"})
-
 module.exports = db
 
