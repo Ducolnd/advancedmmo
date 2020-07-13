@@ -11,7 +11,7 @@ router.use(session({
 }))
 
 router.get("/", function(req, res) {
-    res.render("game/game_home", {layout: "complete"})
+    res.render("game/game_home", {layout: "main-game", title: "Advanced MMO"})
 })
 
 router.get("/items", function (req, res) { // Get all the items in the game

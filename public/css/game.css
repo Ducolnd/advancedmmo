@@ -1,0 +1,10 @@
+#navbar { 
+    margin-bottom: 40px;
+    outline-style: solid;
+    outline-width: thin;
+    height: 30px;
+}
+
+#xp-text{
+    padding:0px;
+}
