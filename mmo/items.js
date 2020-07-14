@@ -34,7 +34,7 @@ class Armour {//all armour pieces are a set: Helmet, Shirt, Pants, gloves, shoes
 // - setname(string) The name of the set
 
 class Weapon {
-    constructor(item_data) {
+    constructor(item_data = {stack_size: 1}) {
     }
 }
 

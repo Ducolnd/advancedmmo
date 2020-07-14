@@ -2,9 +2,14 @@
   <dictionary name="duco">
     <words>
       <w>bcrypt</w>
+      <w>bestand</w>
+      <w>foto</w>
       <w>logincomplete</w>
       <w>navbar</w>
+      <w>oathbreaker</w>
       <w>resave</w>
+      <w>valyria</w>
+      <w>valyrian</w>
     </words>
   </dictionary>
 </component>
