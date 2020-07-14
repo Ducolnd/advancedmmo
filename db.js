@@ -46,7 +46,6 @@ class Db {
     getPlayerInfo(username, info="*", callback) { // Default is all (*)
         db.read("player_data", {
             integers: false,
-            ...(info === "*") && {columns: info},
             conditions: {
                 username: username
             }
@@ -96,6 +95,7 @@ class Db {
         let sql = `SELECT `
 
         if ("columns" in data) {
+            console.log(data.columns)
             data["columns"].forEach( function (name) {
                 sql += `${name},`
             })
@@ -123,6 +123,17 @@ class Db {
         this.db.query(sql, function (err, results) {
             if (err) console.log(err)
             callback(results)
+        })
+    }
+
+    getPlayerInventory(username, callback) {
+        db.read("player_inventory", {
+            integers: false,
+            conditions: {
+                username: username
+            }
+        }, function (data) {
+            callback(data)
         })
     }
 }

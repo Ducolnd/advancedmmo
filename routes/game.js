@@ -32,14 +32,10 @@ router.get("/", function(req, res) {
 })
 
 router.get("/items", function (req, res) { // Get all the items in the game
-    res.render("game/items")
+    res.render("game/items", {layout: "complete"})
 })
 
-router.get("/items/add", function (req, res) { // Add a new item
-
-})
-
-router.get("/player/:username", function (req, res) {
+router.get("/player/:username", function (req, res) { // Get player info
     db.getPlayerInfo(req.params.username, "",function (results) {
         if (results && !results.length) {
             res.render("game/users", {layout: "complete", found: false})
