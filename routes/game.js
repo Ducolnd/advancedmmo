@@ -10,8 +10,25 @@ router.use(session({
     cookie: { secure: false }
 }))
 
+router.use(function(req, res, next) {
+    console.log("hey")
+
+    next()
+})
+
 router.get("/", function(req, res) {
-    res.render("game/game_home", {layout: "main-game", title: "Advanced MMO"})
+    if (req.session.loggedin){
+        db.getPlayerInfo(req.session.username,"", function(data){
+            //function
+            res.render("game/game_home", {layout: "main-game", title: "Advanced MMO", xp: data[0].experience, coins: data[0].coins})
+        })}
+
+
+    else{
+        res.redirect("/auth/login")
+    }
+
+    
 })
 
 router.get("/items", function (req, res) { // Get all the items in the game
