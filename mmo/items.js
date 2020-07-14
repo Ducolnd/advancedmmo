@@ -38,22 +38,24 @@ class Weapon {
     }
 }
 
+new Weapon()
+
 const game_items = {
-    1: new Item({
+    1: {
         id: 1,
         name: "Chainmail shoes",
         description: "Strong boots made at the hand of a blacksmith",
-        icon: "../images/Icons/chainmail-shoes",
+        icon: "chainmail-shoes.png",
         sell_price: 100,
         buy_price: 150,
         stack_size: 1,
         rarity: 1,
-        item_data: new Armour({
+        item_data: {
             type: "shoes",
             defence: 2,
             set_name: "chainmail"
-        })
-    }),
+        }
+    },
     2: new Item({
         id: 2,
         name: "Chainmail gloves",
@@ -114,10 +116,8 @@ const game_items = {
             set_name: "chainmail"
         })
     })
-
 }
 console.log("alksdjf")
 console.log(game_items[1].item)
-
 
 module.exports = game_items
