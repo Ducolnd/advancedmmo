@@ -54,6 +54,12 @@ class Db {
             callback(data)
         })
     }
+    //updates a value in the player_data table
+    addToPlayer(username, column, amount){//username=username, column=The variable that you want to change, amount=amount
+
+        let sql = `UPDATE player_data SET ${column} = ${column} + ${amount} WHERE username = "${username}"`
+        this.db.query(sql)
+    }
 
     insert(table, data, callback) { // New row according to 'data' object
         let sql = `INSERT INTO ${table} (`;
