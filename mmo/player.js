@@ -1,12 +1,11 @@
 const db = require("../db")
 const inv = require("./inventory")
 
-const game_items = require("./items")
+const game_items = require("../items.json")
 
 class Player {
     constructor(username) {
         this.inventory = new inv(username)
-        console.log(this.inventory.inventory)
         db.getPlayerInventory(username, (inventory_data) => {
             this.inventory.retrieve(inventory_data)
         })
@@ -16,14 +15,23 @@ class Player {
         })
     }
 
-    give(itemId, onSlot) {
-        this.inventory.replace(itemId, onSlot)
+    give(item, onSlot=-1) { // If slot -1, first available slot will be picked
+        this.inventory.add(item, onSlot)
+    }
+
+    get getInv() { // Get player inventory in object form
+        return this.inventory.inv
+    }
+
+    get getStats() {
+        return this.info
     }
 }
 
-let Ear = new Player("EarlessBear")
+let playerCache = {EarlessBear: new Player("EarlessBear")}
 
 setTimeout(function () {
-    Ear.give(game_items[1], 1)
-    console.log(Ear.inventory.inv[0].item.item)
+    playerCache["EarlessBear"].give({item: game_items["1"], item_specific: {}}, 49)
 }, 1000)
+
+module.exports = playerCache

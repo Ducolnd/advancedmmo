@@ -1,13 +1,43 @@
 <div class="container">
     {{#if found}}
-        <h1>Displaying data for {{user.username}}</h1>
-            id: <b>{{user.id}}</b><br>
-            username: <b>{{user.username}}</b><br>
-            coins: <b>{{user.coins}}</b><br>
-            experience: <b>{{user.experience}}</b><br>
-            level: <b>{{user.level}}</b><br>
+        <h1>Displaying data for {{userStats.username}}</h1>
+            id: <b>{{userStats.id}}</b><br>
+            username: <b>{{userStats.username}}</b><br>
+            coins: <b>{{userStats.coins}}</b><br>
+            experience: <b>{{userStats.experience}}</b><br>
+            level: <b>{{userStats.level}}</b><br>
     {{else}}
         <h1 id="does-not-exist">User does not exist</h1>
     {{/if}}
+
+    <h1><b>{{userStats.username}}</b>'s inventory</h1>
+    <div class="inv">
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th class="th-lg">Item name</th>
+                        <th class="th-lg">Item sell price (NPC)</th>
+                        <th class="th-lg">Item description</th>
+                        <th class="th-lg">Slot</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each inventory}}
+
+                        <tr>
+                            <th scope="row">{{this.item.item.id}}</th>
+                            <td>{{this.item.item.name}}</td>
+                            <td>{{this.item.item.sell_price}}</td>
+                            <td>{{this.item.item.description}}</td>
+                            <td>{{@key}}</td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
 
 </div>

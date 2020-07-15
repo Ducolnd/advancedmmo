@@ -1,4 +1,4 @@
-const game_items = require("./items")
+const game_items = require("../items.json")
 const db = require("../db")
 
 class Inventory {
@@ -9,9 +9,16 @@ class Inventory {
     }
 
     add(item, slot, qnt=1) {
-        if (slot > this.slots || this.inv[slot]) { // Have limited slots and slot already occupied
-            console.log("Not e nough slots")
-            return "Not enough slots or slot is already occupied"
+        if (slot === -1) {
+            for(let i = 0; i < this.slots; i++) {
+                if (!this.inv[i]) {
+                    slot = i; break;
+                }
+            }
+        } else {
+            if (slot > this.slots || this.inv[slot]) { // Have limited slots and slot already occupied
+                return "Not enough slots or slot is already occupied"
+            }
         }
 
         this.inv[slot] = {item: item, quantity: qnt, altered: true}
@@ -21,20 +28,20 @@ class Inventory {
 
     replace(item, slot, qnt=1) {
         if(!this.inv[slot]) {
-            console.log("No item equpped")
+            console.log("No item equipped on that slot")
             return "No item equipped on that slot"
         }
 
         this.inv[slot] = {item: item, quantity: qnt, altered: true}
-
         this.updateDb()
     }
 
-    retrieve(inventory_list) {
+    retrieve(inventory_list) { // Read inv from db and put in inventory object
         inventory_list.forEach((item) => {
+            let itemObj = JSON.parse(item.item)
             this.inv[item.slot] = {
-                item: game_items[item.item_id],
                 quantity: item.quantity,
+                item: {item: game_items[itemObj.item_id], item_data: itemObj.item_data}
             }
         })
     }
@@ -42,8 +49,12 @@ class Inventory {
     updateDb() { // Make sure the database is up to date with the current inventory
         for (const [slot, item] of Object.entries(this.inv)) {
             if (item.altered) {
-                console.log(item.item.item_data)
-                db.db.query(`INSERT INTO player_inventory (slot, quantity, username, item_id, item_data) VALUES (${slot}, ${item.quantity}, '${this.username}', ${item.item.item_data.id}, '{}') ON DUPLICATE KEY UPDATE slot=${slot}, quantity=${item.quantity}, item_id=${item.item.item_data.id}`, function (err, results) {
+                item.altered = false
+
+                let obj = {item_id: item.item.item.id, item_data: item.item.item_specific}
+                let itemJson = JSON.stringify(obj)
+
+                db.db.query(`INSERT INTO player_inventory (slot, quantity, username, item) VALUES (${slot}, ${item.quantity}, '${this.username}', '${itemJson}') ON DUPLICATE KEY UPDATE quantity=${item.quantity}, item='${itemJson}'`, function (err, results) {
                     if (err) {
                         console.log(err)
                     }

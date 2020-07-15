@@ -3,18 +3,14 @@ const session = require("express-session")
 const db = require("../db")
 const router = express.Router()
 
+let playerCache = require("../mmo/player")
+
 router.use(session({
     secret: "yayee",
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }
 }))
-
-router.use(function(req, res, next) {
-    console.log("hey")
-
-    next()
-})
 
 router.get("/", function(req, res) {
     if (req.session.loggedin){
@@ -36,12 +32,11 @@ router.get("/items", function (req, res) { // Get all the items in the game
 })
 
 router.get("/player/:username", function (req, res) { // Get player info
-    db.getPlayerInfo(req.params.username, "",function (results) {
-        if (results && !results.length) {
-            res.render("game/users", {layout: "complete", found: false})
-        } else {
-            res.render("game/users", {layout: "complete", found: true, user: results[0]})
-        }
+    let inv = playerCache["EarlessBear"].getInv
+
+    res.render("game/users", {layout: "complete", found: true,
+        userStats: playerCache["EarlessBear"].getStats,
+        inventory: inv
     })
 })
 
