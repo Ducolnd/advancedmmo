@@ -14,3 +14,34 @@
 .right-padding{
     padding-right: 5px;
 }
+
+#main-jumbo{
+    background-color: #696969;
+    height: 1000px;
+}
+
+#second-jumbo{
+    background-color: gainsboro;
+}
+
+.middiv{
+    width: 49%;
+}
+
+#lefts {
+    border-right: 2% #696969 solid;
+}
+
+.sub {
+    background-color: green;
+}
+
+.you {
+    width: 48%;
+    float: left;
+}
+
+.opponent {
+    width: 48%;
+    float:right;
+}

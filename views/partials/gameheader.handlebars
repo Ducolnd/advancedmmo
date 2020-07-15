@@ -1,13 +1,15 @@
 <header>
-    <link rel="stylesheet" href="public/css/game.css">
+    <link rel="stylesheet" href="/public/css/game.css">
     <nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar">
-        <a class="navbar-brand">stats</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <a class="navbar-brand" href="/game">game</a>
+        <div class="collapse navbar-collapse">
+            <li class="navbar-nav">
+                <a class="nav-link" href="/game/attack">Attack</a>
+            </li>
+        </div>
+        <div>
             <ul class="navbar-nav right-padding">
-                <span class="align-middle">experience: {{xp}}</span>
-            </ul>
-            <ul class="navbar-nav">
-                <span class="">coins: {{coins}}</span>
+                <span>experience: {{xp}}         coins: {{coins}}</span>
             </ul>
         </div>
     </nav>

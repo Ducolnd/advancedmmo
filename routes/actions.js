@@ -20,9 +20,15 @@ router.post("/buy",function (req, res) {
 })
 
 router.post("/money",function (req, res) {
-    db.getPlayerCoins(req.session.username, (returnData) => {
+    db.getPlayerInfo(req.session.username, (returnData) => {
         res.json(returnData[0])
     })
 })
+
+router.post("/attack", function(req, res){
+    
+})
+
+
 
 module.exports = router
