@@ -27,5 +27,20 @@
       "defence": 2,
       "set_name": "chainmail"
     }
+  },
+  "3": {
+    "id": 3,
+    "name": "Chainmail pants",
+    "description": "Strong pants made at the hand of a blacksmith",
+    "icon": "../images/Icons/chainmail-pants",
+    "sell_price": 100,
+    "buy_price": 150,
+    "stack_size": 1,
+    "rarity": 1,
+    "item_data":{
+      "type": "pants",
+      "defence": 2,
+      "set_name": "chainmail"
+    }
   }
 }
