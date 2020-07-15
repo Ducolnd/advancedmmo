@@ -1,4 +1,20 @@
 {
+  "0": {
+    "id": 0,
+    "name": "Valyrian steel sword",
+    "description": "Strong boots made at the hand of a blacksmith",
+    "icon": "chainmail-shoes.png",
+    "sell_price": 2402012,
+    "stack_size": 1,
+    "rarity": "Legendary",
+    "item_data": {
+      "type": "weapon",
+      "sub-type": "sword",
+      "defence": 5,
+      "attack": 290,
+      "set_name": "Valyrian steel"
+    }
+  },
   "1": {
     "id": 1,
     "name": "Chainmail shoes",
@@ -6,7 +22,7 @@
     "icon": "chainmail-shoes.png",
     "sell_price": 100,
     "stack_size": 1,
-    "rarity": 1,
+    "rarity": "Common",
     "item_data": {
       "type": "shoes",
       "defence": 2,
@@ -21,7 +37,7 @@
     "sell_price": 100,
     "buy_price": 150,
     "stack_size": 1,
-    "rarity": 1,
+    "rarity": "Common",
     "item_data":{
       "type": "shoes",
       "defence": 2,
@@ -36,7 +52,7 @@
     "sell_price": 100,
     "buy_price": 150,
     "stack_size": 1,
-    "rarity": 1,
+    "rarity": "Common",
     "item_data":{
       "type": "pants",
       "defence": 2,

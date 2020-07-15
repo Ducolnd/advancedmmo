@@ -19,4 +19,19 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
+
+    <div class="view-items">
+        <div class="showcase">
+            {{#each items}}
+                <div class="item">
+
+                    <img src="/public/images/icons/{{this.icon}}" alt="">
+                    <div class="text-box">
+                        <a href="/"><h2 id="item-name">{{this.name}}</h2></a>
+                    </div>
+
+                </div>
+            {{/each}}
+        </div>
+    </div>
 </div>

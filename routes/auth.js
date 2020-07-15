@@ -1,5 +1,6 @@
 const express = require("express")
 const session = require("express-session")
+const cache = require("../mmo/player")
 const {body, validationResult} = require("express-validator")
 const bcrypt = require("bcrypt");
 const db = require("../db")
@@ -47,6 +48,7 @@ router.post("/register/data", [
                 if (!err) {
                     req.session.loggedin = true;
                     req.session.username = username;
+                    cache.addCache(username)
 
                     res.redirect("/")
                 } else {
@@ -75,12 +77,14 @@ router.post("/login/data", function (req, res) {
                         req.session.loggedin = true;
                         req.session.username = username;
 
+                        cache.addCache(username)
+
                         res.redirect("/");
                     } else {
                         res.send("Password was incorrect")
                     }
-                } catch {
-                    res.status(500).send("error")
+                } catch (err) {
+                    res.status(500).send("error " + err)
                 }
 
             } else {

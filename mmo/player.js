@@ -30,8 +30,17 @@ class Player {
 
 let playerCache = {EarlessBear: new Player("EarlessBear")}
 
+function addCache(player) {
+    if (!playerCache[player]) {
+        playerCache[player] = new Player(player)
+    }
+}
+
 setTimeout(function () {
     playerCache["EarlessBear"].give({item: game_items["1"], item_specific: {}}, 49)
 }, 1000)
 
-module.exports = playerCache
+module.exports = {
+    playerCache,
+    addCache,
+}
