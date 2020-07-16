@@ -1,39 +1,33 @@
 
 <link rel="stylesheet" href="/public/css/game.css">
-<div class="container">
-    {{!-- <div class="jumbotron text-center" id="main-jumbo">
-        <p>yeetloaf op een stokkie met kaas enzovoort</p>
+<script src="/public/js/Attack.js"></script>
 
-        <div class="row">
-            <div class="col-xs-6 jumbotron middiv col-xs-offset-4" id="lefts">div 1</div>
-            <div class="col-xs-6 jumbotron middiv">div 2</div>
-        </div>
-    </div> --}}
+
+<div class="container">
+
 
     <div class="sub">
         <h1>Attack {{oponent}}</h1>
-
+        <p id="yeet"></p>
         <div class="you">
             <h1>You</h1>
             <button id="attack_op">Attack</button>
             <button id="heal">heal</button>
 
             <ul>
-                <li>Health {{ophealt}}</li>
-                <li>Stamina {{opstamina}}</li>
+                <li id="health">Health = {{health}}</li>
+                <li id="stamina">Stamina = {{stamina}}</li>
             </ul>
         </div>
 
         <div class="opponent">
-            <h1>icebear{{oponent}}</h1>
+            <h1>{{oponent}}</h1>
             <button>Surrender</button>
             <ul>
-                <li>Health {{ophealt}}</li>
-                <li>Stamina {{opstamina}}</li>
+                <li    id="ophealth">Health = {{ophealth}}</li>
+                <li id="opstamina">Stamina = {{opstamina}}</li>
             </ul>
         </div>
-
-
     </div>
 </div>
 
