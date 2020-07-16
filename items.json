@@ -1,12 +1,28 @@
 {
+  "0": {
+    "id": 0,
+    "name": "Valyrian steel sword",
+    "description": "A dragon hardened sword, possibly thousands of years old. Made in Valyria by the worlds best blacksmiths",
+    "icon": "metal sword.png",
+    "sell_price": 2402012,
+    "stack_size": 1,
+    "rarity": "Legendary",
+    "type": "weapon",
+    "item_data": {
+      "sub-type": "sword",
+      "defence": 5,
+      "attack": 290,
+      "set_name": "Valyrian steel"
+    }
+  },
   "1": {
     "id": 1,
     "name": "Chainmail shoes",
     "description": "Strong boots made at the hand of a blacksmith",
-    "icon": "chainmail-shoes.png",
+    "icon": "Cloak_02.png",
     "sell_price": 100,
     "stack_size": 1,
-    "rarity": 1,
+    "rarity": "Common",
     "item_data": {
       "type": "shoes",
       "defence": 2,
@@ -17,11 +33,11 @@
     "id": 2,
     "name": "Chainmail gloves",
     "description": "Strong gloves made at the hand of a blacksmith",
-    "icon": "../images/Icons/chainmail-gloves",
+    "icon": "Shirt_01.png",
     "sell_price": 100,
     "buy_price": 150,
     "stack_size": 1,
-    "rarity": 1,
+    "rarity": "Rare",
     "item_data":{
       "type": "shoes",
       "defence": 2,
@@ -32,11 +48,11 @@
     "id": 3,
     "name": "Chainmail pants",
     "description": "Strong pants made at the hand of a blacksmith",
-    "icon": "../images/Icons/chainmail-pants",
+    "icon": "Shirt_00.png",
     "sell_price": 100,
     "buy_price": 150,
     "stack_size": 1,
-    "rarity": 1,
+    "rarity": "Common",
     "item_data":{
       "type": "pants",
       "defence": 2,

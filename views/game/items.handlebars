@@ -1,22 +1,22 @@
 <link rel="stylesheet" href="/public/css/items.css">
 <div class="container">
-    <div class="form-section">
-        <h1>Create a new item</h1>
-        <form>
-            <div class="form-group">
-                <label for="itemName">Item name</label>
-                <input type="text" class="form-control" id="itemName" aria-describedby="itemName" placeholder="Item name">
-<!--                <small id="textHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-            </div>
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+    <h1 class="heading">Game items</h1>
+    <div class="view-items">
+        <div class="showcase">
+            {{#each items}}
+                    <div class="item">
+
+                        <img src="/public/images/icons/{{this.icon}}" alt="">
+                        <div class="text-box">
+                            <a href="/"><h2 id="item-name">{{this.name}}</h2></a>
+                            <p>{{this.rarity}}</p>
+
+                        </div>
+                        <div class="text-box-2">
+                            <p>{{this.description}}</p>
+                        </div>
+                    </div>
+            {{/each}}
+        </div>
     </div>
 </div>

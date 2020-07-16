@@ -2,11 +2,14 @@ const express = require("express")
 const session = require("express-session")
 const db = require("../db")
 const router = express.Router()
-
+const game_items = require("../items.json")
+let playerCache = require("../mmo/player")
 
 function randint(min, max) {
     return Math.floor(Math.random() * (max - min) ) + min;
 }
+
+
 
 router.use(session({
     secret: "yayee",
@@ -33,8 +36,18 @@ router.get("/", function(req, res) {
     }
 })
 
-router.get("/items", function (req, res) { // Get all the items in the game
-    res.render("game/items", {layout: "complete"})
+router.get("/items/:page*?", function (req, res) { // Get all the items in the game
+    let page
+    page = (!req.params.page) ? 0 : parseInt(req.params.page)
+    let perPage = 20
+    let toShow = {}
+
+    for (let i = page * 10; i < page * 10 + perPage; i++) {
+        if(!game_items[i.toString()]) continue
+        toShow[i] = game_items[i.toString()]
+    }
+
+    res.render("game/items", {layout: "complete", items: toShow})
 })
 
 router.get("/player/:username", function (req, res) { // Get player info
@@ -46,7 +59,6 @@ router.get("/player/:username", function (req, res) { // Get player info
         }
     })
 })
-
 
 router.get("/info",function (req, res) {
     console.log(req.session)
