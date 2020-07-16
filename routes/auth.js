@@ -25,6 +25,13 @@ router.get("/register", function (req, res) {
     res.render("auth/register", {layout: "logincomplete.handlebars", title: "Register new account", erros: req.session.errors})
 })
 
+router.get("/logout", function (req, res) { // Log out user
+    req.session.username = null
+    req.session.loggedin = false
+
+    res.redirect("/auth/login")
+})
+
 // Register router
 router.post("/register/data", [
     body("username").isAscii().withMessage("Username may only contain ASCII characters"),

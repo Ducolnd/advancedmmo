@@ -9,7 +9,7 @@ class Db {
             database: db_name
         })
 
-        this.db.connect(function (err) { // Connect database upon initalizing
+        this.db.connect(function (err) { // Connect database upon initializing
             if (err) {console.log("Error! " + err)} else { console.log("Connected to database") }
         })
 
