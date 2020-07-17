@@ -6,6 +6,9 @@ const game_items = require("../items.json")
 class Player {
     constructor(username) {
         this.inventory = new inv(username)
+        this.username = username
+        this.playerColor = "red"
+
         db.getPlayerInventory(username, (inventory_data) => {
             this.inventory.retrieve(inventory_data)
         })
@@ -15,8 +18,16 @@ class Player {
         })
     }
 
+    sell(onSlot) {
+
+    }
+
     give(item, onSlot=-1) { // If slot -1, first available slot will be picked
         this.inventory.add(item, onSlot)
+    }
+
+    get render() { // Function to get player data to use it when rendering. It basically puts all player info in an object
+        return {stats: this.info, username: this.username, color: this.playerColor}
     }
 
     get getInv() { // Get player inventory in object form
@@ -31,9 +42,11 @@ class Player {
 let playerCache = {EarlessBear: new Player("EarlessBear")}
 
 function addCache(player) {
+    console.log(player)
     if (!playerCache[player]) {
         playerCache[player] = new Player(player)
     }
+    console.log(playerCache["a"])
 }
 
 setTimeout(function () {

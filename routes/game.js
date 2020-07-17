@@ -3,7 +3,7 @@ const session = require("express-session")
 const db = require("../db")
 const router = express.Router()
 const game_items = require("../items.json")
-let playerCache = require("../mmo/player")
+let p = require("../mmo/player")
 
 const enemies = require("../enemies.json")
 
@@ -24,14 +24,18 @@ router.use(function(req, res, next) {
     next()
 })
 
+router.use(function (req, res, next) { // On every request, check if user is logged in
+    if (!req.session.loggedin) {
+        res.redirect("/auth/login")
+    } else { next() }
+})
+
 router.get("/", function(req, res) {
     if (req.session.loggedin){
-        db.getPlayerInfo(req.session.username,"", function(data){
-            //function
-            res.render("game/game_home", {layout: "main-game", title: "Advanced MMO", xp: data[0].experience, coins: data[0].coins})
-        })}
+        let player = p.playerCache[req.session.username]
 
-
+        res.render("game/game_home", {layout: "main-game", title: "Advanced MMO", user: player.render})
+    }
     else{
         res.redirect("/auth/login")
     }

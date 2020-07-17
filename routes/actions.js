@@ -13,7 +13,6 @@ router.use(session({
     cookie: { secure: false }
 }))
 
-
 router.post("/walk", function(req, res) {
     res.json({timetowait: 23})
 })
