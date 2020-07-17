@@ -5,11 +5,12 @@ const router = express.Router()
 const game_items = require("../items.json")
 let playerCache = require("../mmo/player")
 
+const enemies = require("../enemies.json")
+
+
 function randint(min, max) {
     return Math.floor(Math.random() * (max - min) ) + min;
 }
-
-
 
 router.use(session({
     secret: "yayee",
@@ -79,13 +80,15 @@ router.get("/attack", function(req, res){// The page to attack something
     if (req.session.loggedin){
         db.getPlayerInfo(req.session.username,"", function(data){
             //function
-            names = ["Icebear", "Zombie", "Pig", "Schlab"]
+            enemy = enemies[randint(1, 3)]
             req.session.enemy = {
-                opname: names[Math.floor(Math.random() * names.length)],
-                ophealth: randint(50, 100),
-                opdamage: randint(4, 14),
-                opstamina: randint(9, 11),
+                enemy_id: enemy["id"],
+                opname: enemy["name"],
+                ophealth: enemy['health'],
+                opstamina: enemy["stamina"],
+                opdef: enemy["defence"],
                 damage: 10,
+                def: 5,
                 health: 100,
                 stamina: 10
                 }
@@ -105,6 +108,12 @@ router.get("/attack", function(req, res){// The page to attack something
     else{
         res.redirect("/auth/login")
     }
+})
+router.get("/win", function(req, res){
+    res.send("win")
+})
+router.get("/lose", function(req, res){
+    res.send("lose")
 })
 
 module.exports = router
