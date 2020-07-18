@@ -1,4 +1,4 @@
-advancedmmo
+# advancedmmo
 Advanced-mmo is a different kind of mmo than you probably know. Instead of 3d gameplay it features some very in depth gameplay such as managing a town.
 It is a work in progress but we are well under way.
 
