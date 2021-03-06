@@ -20,7 +20,7 @@
     "mustache": "^4.0.1",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.4",
-    "pug": ">=3.2.0"
+    "pug": ">=3.0.1"
   },
   "devDependencies": {
     "bcrypt": "^5.0.0",
